@@ -16,3 +16,116 @@
 @import url('./badges.css');
 @import url('./back-link.css');
 @import url('./footer.css');
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* Автоматична сітка */
+  gap: 16px;
+  /* Відстань між елементами */
+  margin-top: 20px;
+}
+
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  /* Вертикальне вирівнювання */
+  align-items: center;
+  /* Центрування */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-info {
+  padding: 10px;
+  background-color: #f9f9f9;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+}
+
+.image-info p {
+  margin: 5px 0;
+}
+
+/* доьавила стили для 12 */
+/* Основной контейнер */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Центрируем элементы по горизонтали */
+  justify-content: center;
+  /* Центрируем по вертикали */
+  min-height: 100vh;
+  /* Задаем высоту на весь экран */
+  padding: 20px;
+  text-align: center;
+  /* Центрируем текст в контейнере */
+}
+
+/* Форма поиска */
+#search-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#search-form input {
+  width: 250px;
+  /* Можно адаптировать под размер экрана */
+  padding: 10px;
+  font-size: 14px;
+  margin-right: 10px;
+  /* Отступ справа для кнопки */
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+#search-form button {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#search-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Галерея изображений */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+  justify-content: center;
+  /* Центрируем галерею */
+}
+
+/* Кнопка Load More */
+#load-more {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#load-more:hover {
+  background-color: #0056b3;
+}
