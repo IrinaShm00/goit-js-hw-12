@@ -46,17 +46,19 @@ async function fetchImages(query, page) {
 
 // для отображения кнопки лоад мор
 function toggleLoadMoreButton(show) {
-  if (show) {
-    loadMoreBtn.style.display = 'block';
-  } else {
-    loadMoreBtn.style.display = 'none';
-  }
+  loadMoreBtn.style.display = show ? 'block' : 'none';
 }
 
 // для отображения сообщения о конце результатов
 function showEndMessage() {
   endMessage.textContent = "We're sorry, but you've reached the end of search results.";
   endMessage.style.display = 'block';
+}
+
+// Плавный скролл
+function smoothScroll() {
+  const cardHeight = document.querySelector('.gallery-item')?.getBoundingClientRect().height || 0;
+  window.scrollBy({ top: cardHeight * 2, behavior: 'smooth' });
 }
 
 // Обработчик сабмита формы
@@ -84,41 +86,31 @@ searchForm.addEventListener('submit', async (event) => {
     totalHits = images.totalHits; // Обновляем общее количество изображений
     displayImages(images, gallery, lightbox);
     lightbox.refresh();
-    toggleLoadMoreButton(images.hits.length === 15); // Показываем кнопку, если есть больше изображений
+    toggleLoadMoreButton(images.hits.length === 15);
 
-    // Если количество загруженных изображений меньше 15 или достигнут конец коллекции
     if (images.hits.length < 15 || page * 15 >= totalHits) {
-      toggleLoadMoreButton(false); // Скрыть кнопку
-      showEndMessage(); // Показать сообщение о конце
+      toggleLoadMoreButton(false);
+      showEndMessage();
     }
   } catch (error) {
-    iziToast.error({
-      title: 'Error',
-      message: 'Failed to fetch images.',
-    });
+    iziToast.error({ title: 'Error', message: 'Failed to fetch images.' });
   }
 });
 
 // Обработчик кнопки лоад мор
 loadMoreBtn.addEventListener('click', async () => {
   page += 1;
-
   try {
     const images = await fetchImages(query, page);
-    displayImages(images, gallery, lightbox);
+    gallery.insertAdjacentHTML('beforeend', images.hits.map(img => `<a href="${img.largeImageURL}" class="gallery-item"><img src="${img.webformatURL}" alt="${img.tags}"></a>`).join(''));
     lightbox.refresh();
+    smoothScroll(); // Плавный скролл после загрузки
 
-    
-
-    // Если изображений < 15, скрыть кнопку
     if (images.hits.length < 15 || page * 15 >= totalHits) {
-      toggleLoadMoreButton(false); // Если достигнут конец коллекции
-      showEndMessage(); // Показать сообщение о конце
+      toggleLoadMoreButton(false);
+      showEndMessage();
     }
   } catch (error) {
-    iziToast.error({
-      title: 'Error',
-      message: 'Failed to fetch more images.',
-    });
+    iziToast.error({ title: 'Error', message: 'Failed to fetch more images.' });
   }
 });
